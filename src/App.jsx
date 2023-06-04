@@ -6,7 +6,7 @@ const CONTACT_FORM_INIT ={
 }
 
 
-const ContactFrom = () =>{
+const ContactFrom = ({getContacts}) =>{
    const [values, setValues] = useState({...CONTACT_FORM_INIT})
 
    const {name,email} = values
@@ -16,15 +16,19 @@ const ContactFrom = () =>{
    const handleChange = (e) =>{
         setValues({
           ...values,
-          [e.target.name]:e.target.values
-
+          [e.target.name]:e.target.value,
         })
+
+      
 
    }
 
 
    const handleSubmit = (e) =>{
       e.preventDefault()
+
+      getContacts(values)
+
    }
 
   return (
@@ -57,10 +61,46 @@ const ContactFrom = () =>{
   )
 }
 
-const App = () => {
+
+const Table = ({contacts}) =>{
+
+  return (
+
+    <table>
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>email</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      {contacts.map((contact,index)=>(
+        <tr key={index}>
+          <td>{contact.name}</td>
+          <td>{contact.email}</td>
+        </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+
+}
+
+const App = () =>{
+
+  const [contacts,setContacts] = useState([])
+
+  const getContacts = (contact)=>{
+    setContacts([].concat(contacts,contact)
+     
+    );
+  }
   return (
     <div>
-      <ContactFrom/>
+      <ContactFrom getContacts={getContacts}/>
+
+      <Table contacts={contacts}/>
     </div>
   )
 }
