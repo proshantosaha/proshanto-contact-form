@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 const CONTACT_FORM_INIT ={
     name:"",
     email:"",
+    group:'',
   }
   
   
   const ContactFrom = ({getContacts}) =>{
      const [values, setValues] = useState({...CONTACT_FORM_INIT})
   
-     const {name,email} = values
+     const {name,email,group} = values
   
   
   
@@ -56,6 +57,16 @@ const CONTACT_FORM_INIT ={
             />
            
         </div>
+            <div>
+                <label htmlFor='group'>Group</label>
+                <select name="group" id="group" value={group}  onChange={handleChange}>
+                    <option value=''>Select group</option>
+                    <option value='Home'>Home</option>
+                    <option value='Office'>Office</option>
+                </select>
+            </div>
+
+
         <br/>
         <input type="submit" value={'create new contact'}/>
       </form>
